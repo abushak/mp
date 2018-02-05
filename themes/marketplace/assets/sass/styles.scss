@@ -24,10 +24,13 @@ CSS
 @import "base/elements";
 @import "base/header";
 @import "base/footer";
+@import "base/custom";
 
 // Partials
 @import "partials/view";
 @import "partials/block";
 @import "partials/page";
 @import "partials/responsive";
-@import "partials/print";
+@import "partials/print"; 
+@import "base/cart";  
+

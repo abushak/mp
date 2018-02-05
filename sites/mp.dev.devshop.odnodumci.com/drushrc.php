@@ -104,6 +104,27 @@ $options['packages'] = array (
       'status' => 0,
       'schema_version' => -1,
     ),
+    'address' => 
+    array (
+      'name' => 'Address',
+      'type' => 'module',
+      'description' => 'Provides functionality for handling postal addresses.',
+      'package' => 'Field types',
+      'config' => 'entity.address_format.collection',
+      'dependencies' => 
+      array (
+        0 => 'drupal:field',
+      ),
+      'version' => '8.x-1.2',
+      'core' => '8.x',
+      'project' => 'address',
+      'datestamp' => 1505896147,
+      'mtime' => 1505888948,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/address/address.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'admin_toolbar' => 
     array (
       'name' => 'Admin Toolbar',
@@ -121,8 +142,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/admin_toolbar/admin_toolbar.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'admin_toolbar_tools' => 
     array (
@@ -141,8 +162,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/admin_toolbar/admin_toolbar_tools/admin_toolbar_tools.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'aggregator' => 
     array (
@@ -272,7 +293,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/block_content/block_content.info.yml',
       'status' => 1,
-      'schema_version' => '8300',
+      'schema_version' => 8300,
     ),
     'block_place' => 
     array (
@@ -381,7 +402,366 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/comment/comment.info.yml',
       'status' => 1,
-      'schema_version' => '8400',
+      'schema_version' => 8400,
+    ),
+    'commerce' => 
+    array (
+      'name' => 'Commerce',
+      'type' => 'module',
+      'description' => 'Defines common functionality for all Commerce modules.',
+      'package' => 'Commerce',
+      'configure' => 'commerce.admin_commerce',
+      'dependencies' => 
+      array (
+        0 => 'address',
+        1 => 'entity:entity',
+        2 => 'datetime',
+        3 => 'inline_entity_form',
+        4 => 'views',
+        5 => 'system (>=8.4.0)',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/commerce.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_cart' => 
+    array (
+      'name' => 'Commerce Cart',
+      'type' => 'module',
+      'description' => 'Implements the shopping cart system and add to cart features.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'commerce:commerce_order',
+        2 => 'commerce:commerce_price',
+        3 => 'commerce:commerce_product',
+        4 => 'views',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'core.entity_form_mode.commerce_order_item.add_to_cart',
+          1 => 'views.view.commerce_cart_form',
+          2 => 'views.view.commerce_carts',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/cart/commerce_cart.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_checkout' => 
+    array (
+      'name' => 'Commerce Checkout',
+      'type' => 'module',
+      'description' => 'Provides configurable checkout flows.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'commerce:commerce_order',
+        2 => 'commerce:commerce_cart',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'commerce_checkout.commerce_checkout_flow.default',
+          1 => 'core.entity_view_display.commerce_product_variation.default.summary',
+          2 => 'core.entity_view_mode.commerce_product_variation.summary',
+          3 => 'views.view.commerce_checkout_order_summary',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/checkout/commerce_checkout.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_log' => 
+    array (
+      'name' => 'Commerce Log',
+      'type' => 'module',
+      'description' => 'Provides activity logs for Commerce entities.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'user',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/log/commerce_log.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_order' => 
+    array (
+      'name' => 'Commerce Order',
+      'type' => 'module',
+      'description' => 'Defines the Order entity and associated features.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'commerce:commerce_price',
+        2 => 'commerce:commerce_store',
+        3 => 'entity_reference_revisions',
+        4 => 'options',
+        5 => 'profile',
+        6 => 'state_machine',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'commerce_order.commerce_order_type.default',
+          1 => 'core.entity_form_display.commerce_order.default.default',
+          2 => 'core.entity_view_display.commerce_order.default.default',
+          3 => 'core.entity_view_display.commerce_order.default.user',
+          4 => 'core.entity_view_mode.commerce_order.user',
+          5 => 'core.entity_form_display.profile.customer.default',
+          6 => 'core.entity_view_display.profile.customer.default',
+          7 => 'field.field.commerce_order.default.order_items',
+          8 => 'field.storage.commerce_order.order_items',
+          9 => 'views.view.commerce_orders',
+          10 => 'views.view.commerce_order_item_table',
+          11 => 'views.view.commerce_user_orders',
+          12 => 'profile.type.customer',
+          13 => 'system.action.commerce_delete_order_action',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/order/commerce_order.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_payment' => 
+    array (
+      'name' => 'Commerce Payment',
+      'type' => 'module',
+      'description' => 'Provides payment functionality.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce:commerce_order',
+        1 => 'entity_reference_revisions',
+        2 => 'filter',
+        3 => 'user',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'field.storage.user.commerce_remote_id',
+          1 => 'field.field.user.user.commerce_remote_id.yml',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/payment/commerce_payment.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_payment_example' => 
+    array (
+      'name' => 'Commerce Payment Example',
+      'type' => 'module',
+      'description' => 'Provides payment gateway examples.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce:commerce_payment',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/payment_example/commerce_payment_example.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_price' => 
+    array (
+      'name' => 'Commerce Price',
+      'type' => 'module',
+      'description' => 'Defines the Currency entity.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/price/commerce_price.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_product' => 
+    array (
+      'name' => 'Commerce Product',
+      'type' => 'module',
+      'description' => 'Defines the Product entity and associated features.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'commerce:commerce_price',
+        2 => 'commerce:commerce_store',
+        3 => 'path',
+        4 => 'text',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'commerce_product.commerce_product_type.default',
+          1 => 'commerce_product.commerce_product_variation_type.default',
+          2 => 'core.entity_form_display.commerce_product.default.default',
+          3 => 'core.entity_view_display.commerce_product.default.default',
+          4 => 'core.entity_form_display.commerce_product_variation.default.default',
+          5 => 'field.storage.commerce_product.body',
+          6 => 'field.storage.commerce_product.stores',
+          7 => 'field.storage.commerce_product.variations',
+          8 => 'field.field.commerce_product.default.body',
+          9 => 'field.field.commerce_product.default.stores',
+          10 => 'field.field.commerce_product.default.variations',
+          11 => 'system.action.commerce_delete_product_action',
+          12 => 'system.action.commerce_publish_product',
+          13 => 'system.action.commerce_unpublish_product',
+          14 => 'views.view.commerce_products',
+        ),
+        'optional' => 
+        array (
+          0 => 'commerce_order.commerce_order_item_type.default',
+          1 => 'core.entity_form_display.commerce_order_item.product_variation.default',
+          2 => 'core.entity_form_display.commerce_order_item.product_variation.add_to_cart',
+          3 => 'core.entity_view_display.commerce_order_item.product_variation.default',
+          4 => 'core.entity_view_display.commerce_product_variation.default.cart',
+          5 => 'core.entity_view_mode.commerce_product_variation.cart',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/product/commerce_product.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_promotion' => 
+    array (
+      'name' => 'Commerce Promotion',
+      'type' => 'module',
+      'description' => 'Provides a UI for managing promotions.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'options',
+        1 => 'inline_entity_form',
+        2 => 'commerce',
+        3 => 'commerce:commerce_order',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/promotion/commerce_promotion.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_store' => 
+    array (
+      'name' => 'Commerce Store',
+      'type' => 'module',
+      'description' => 'Defines the Store entity and associated features.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce',
+        1 => 'commerce:commerce_price',
+        2 => 'options',
+      ),
+      'config_devel' => 
+      array (
+        'install' => 
+        array (
+          0 => 'commerce_store.commerce_store_type.online',
+          1 => 'commerce_store.settings',
+          2 => 'core.entity_view_display.commerce_store.online.default',
+          3 => 'views.view.commerce_stores',
+          4 => 'system.action.commerce_delete_store_action',
+        ),
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/store/commerce_store.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'commerce_tax' => 
+    array (
+      'name' => 'Commerce Tax',
+      'type' => 'module',
+      'description' => 'Provides tax functionality.',
+      'package' => 'Commerce',
+      'dependencies' => 
+      array (
+        0 => 'commerce:commerce_order',
+      ),
+      'version' => '8.x-2.1',
+      'core' => '8.x',
+      'project' => 'commerce',
+      'datestamp' => 1509734300,
+      'mtime' => 1509730700,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/commerce/modules/tax/commerce_tax.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
     ),
     'config' => 
     array (
@@ -417,8 +797,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/config_translation/config_translation.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'contact' => 
     array (
@@ -473,8 +853,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/content_translation/content_translation.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8400,
     ),
     'contextual' => 
     array (
@@ -493,6 +873,68 @@ $options['packages'] = array (
       'status' => 1,
       'schema_version' => 8000,
     ),
+    'currency' => 
+    array (
+      'name' => 'Currency',
+      'description' => 'Provides currency metadata and exchange rates, and amount formatting.',
+      'configure' => 'entity.currency.collection',
+      'type' => 'module',
+      'dependencies' => 
+      array (
+        0 => 'plugin',
+      ),
+      'version' => '8.x-3.1',
+      'core' => '8.x',
+      'project' => 'currency',
+      'datestamp' => 1455608847,
+      'mtime' => 1455605248,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/currency/currency.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'currency_intl' => 
+    array (
+      'name' => 'Currency Intl',
+      'description' => 'Formats amounts according the locales of users using the PHP Intl extension.',
+      'type' => 'module',
+      'dependencies' => 
+      array (
+        0 => 'currency',
+      ),
+      'version' => '8.x-3.1',
+      'core' => '8.x',
+      'project' => 'currency',
+      'datestamp' => 1455608847,
+      'mtime' => 1455605248,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/currency/modules/currency_intl/currency_intl.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'currency_test' => 
+    array (
+      'name' => 'Currency tests',
+      'description' => 'Supports Currency\'s automated tests.',
+      'dependencies' => 
+      array (
+        0 => 'currency',
+      ),
+      'hidden' => true,
+      'type' => 'module',
+      'version' => '8.x-3.1',
+      'core' => '8.x',
+      'project' => 'currency',
+      'datestamp' => 1455608847,
+      'mtime' => 1455605248,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/currency/modules/currency_test/currency_test.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'custom_breadcrumb' => 
     array (
       'name' => 'Custom Breadcrumb',
@@ -507,8 +949,8 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/weebpal_module/custom_breadcrumb/custom_breadcrumb.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'custom_image_menu' => 
     array (
@@ -579,7 +1021,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/dblog/dblog.info.yml',
       'status' => 1,
-      'schema_version' => '8400',
+      'schema_version' => 8400,
     ),
     'devel' => 
     array (
@@ -602,8 +1044,8 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/devel/devel.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'devel_generate' => 
     array (
@@ -625,8 +1067,8 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/devel/devel_generate/devel_generate.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'devel_node_access' => 
     array (
@@ -651,6 +1093,34 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/devel/devel_node_access/devel_node_access.info.yml',
+      'status' => 1,
+      'schema_version' => 8000,
+    ),
+    'dynamic_entity_reference' => 
+    array (
+      'name' => 'Dynamic Entity Reference',
+      'type' => 'module',
+      'description' => 'Provides an entity reference field that can reference multiple entity types.',
+      'package' => 'Field types',
+      'dependencies' => 
+      array (
+        0 => 'drupal:field',
+      ),
+      'test_dependencies' => 
+      array (
+        0 => 'drupal:field_ui',
+        1 => 'drupal:language',
+        2 => 'drupal:locale',
+        3 => 'drupal:node',
+        4 => 'drupal:taxonomy',
+      ),
+      'version' => '8.x-1.4',
+      'core' => '8.x',
+      'project' => 'dynamic_entity_reference',
+      'datestamp' => 1501151044,
+      'mtime' => 1501143844,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/dynamic_entity_reference/dynamic_entity_reference.info.yml',
       'status' => 0,
       'schema_version' => -1,
     ),
@@ -691,6 +1161,26 @@ $options['packages'] = array (
       'status' => 1,
       'schema_version' => '8001',
     ),
+    'entity' => 
+    array (
+      'name' => 'Entity',
+      'description' => 'Provides expanded entity APIs, which will be moved to Drupal core one day.',
+      'type' => 'module',
+      'dependencies' => 
+      array (
+        0 => 'drupal:system (>=8.3.0)',
+      ),
+      'version' => '8.x-1.0-beta1',
+      'core' => '8.x',
+      'project' => 'entity',
+      'datestamp' => 1505895847,
+      'mtime' => 1505888648,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/entity/entity.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'entity_reference' => 
     array (
       'name' => 'Entity Reference',
@@ -709,6 +1199,29 @@ $options['packages'] = array (
       'status' => 0,
       'schema_version' => -1,
     ),
+    'entity_reference_revisions' => 
+    array (
+      'name' => 'Entity Reference Revisions',
+      'type' => 'module',
+      'description' => 'Adds a Entity Reference field type with revision support.',
+      'package' => 'Field types',
+      'test_dependencies' => 
+      array (
+        0 => 'diff:diff',
+      ),
+      'version' => '8.x-1.3',
+      'core' => '8.x',
+      'project' => 'entity_reference_revisions',
+      'datestamp' => 1495814304,
+      'mtime' => 1495807104,
+      'dependencies' => 
+      array (
+      ),
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/entity_reference_revisions/entity_reference_revisions.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'field' => 
     array (
       'name' => 'Field',
@@ -724,7 +1237,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/field/field.info.yml',
       'status' => 1,
-      'schema_version' => '8003',
+      'schema_version' => 8003,
     ),
     'field_layout' => 
     array (
@@ -778,7 +1291,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/file/file.info.yml',
       'status' => 1,
-      'schema_version' => '8300',
+      'schema_version' => 8300,
     ),
     'filter' => 
     array (
@@ -873,7 +1386,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/history/history.info.yml',
       'status' => 1,
-      'schema_version' => '8101',
+      'schema_version' => 8101,
     ),
     'image' => 
     array (
@@ -892,7 +1405,30 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/image/image.info.yml',
       'status' => 1,
-      'schema_version' => '8201',
+      'schema_version' => 8201,
+    ),
+    'inline_entity_form' => 
+    array (
+      'name' => 'Inline Entity Form',
+      'description' => 'Provides a widget for inline management (creation, modification, removal) of referenced entities. ',
+      'type' => 'module',
+      'package' => 'Fields',
+      'test_dependencies' => 
+      array (
+        0 => 'entity_reference_revisions:entity_reference_revisions',
+      ),
+      'version' => '8.x-1.0-beta1',
+      'core' => '8.x',
+      'project' => 'inline_entity_form',
+      'datestamp' => 1477868362,
+      'mtime' => 1477864762,
+      'dependencies' => 
+      array (
+      ),
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/inline_entity_form/inline_entity_form.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
     ),
     'inline_form_errors' => 
     array (
@@ -931,8 +1467,8 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/devel/kint/kint.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'language' => 
     array (
@@ -949,8 +1485,8 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/language/language.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => '8001',
     ),
     'layout_discovery' => 
     array (
@@ -1004,8 +1540,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/locale/locale.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8300,
     ),
     'media' => 
     array (
@@ -1140,6 +1676,29 @@ $options['packages'] = array (
       'status' => 0,
       'schema_version' => -1,
     ),
+    'mobile_number' => 
+    array (
+      'name' => 'Mobile Number',
+      'description' => 'Mobile number field with sms verification.',
+      'package' => 'Field types',
+      'type' => 'module',
+      'dependencies' => 
+      array (
+      ),
+      'test_dependencies' => 
+      array (
+        0 => 'smsframework:sms',
+      ),
+      'version' => '8.x-1.0-alpha5',
+      'core' => '8.x',
+      'project' => 'mobile_number',
+      'datestamp' => 1493925188,
+      'mtime' => 1493917988,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/mobile_number/mobile_number.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'node' => 
     array (
       'name' => 'Node',
@@ -1157,7 +1716,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/node/node.info.yml',
       'status' => 1,
-      'schema_version' => '8400',
+      'schema_version' => 8400,
     ),
     'options' => 
     array (
@@ -1211,7 +1770,53 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/path/path.info.yml',
       'status' => 1,
-      'schema_version' => '8200',
+      'schema_version' => 8200,
+    ),
+    'plugin' => 
+    array (
+      'name' => 'Plugin',
+      'description' => 'Provides tools that extend Drupal\'s plugin system.',
+      'type' => 'module',
+      'configure' => 'plugin.plugin_type.list',
+      'dependencies' => 
+      array (
+        0 => 'system (>=8.0.5)',
+      ),
+      'version' => '8.x-2.5',
+      'core' => '8.x',
+      'project' => 'plugin',
+      'datestamp' => 1491597185,
+      'mtime' => 1491589986,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/plugin/plugin.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'profile' => 
+    array (
+      'name' => 'Profile',
+      'type' => 'module',
+      'description' => 'Provides configurable user profiles.',
+      'configure' => 'entity.profile_type.collection',
+      'dependencies' => 
+      array (
+        0 => 'user',
+        1 => 'entity',
+        2 => 'field',
+        3 => 'views',
+        4 => 'system (>=8.1.0)',
+      ),
+      'version' => '8.x-1.0-rc1',
+      'core' => '8.x',
+      'project' => 'profile',
+      'datestamp' => 1505830148,
+      'mtime' => 1505822948,
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/profile/profile.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
     ),
     'quickedit' => 
     array (
@@ -1306,6 +1911,145 @@ $options['packages'] = array (
       'status' => 1,
       'schema_version' => 8000,
     ),
+    'search_api' => 
+    array (
+      'type' => 'module',
+      'name' => 'Search API',
+      'description' => 'Provides a generic framework for modules offering search capabilities.',
+      'package' => 'Search',
+      'configure' => 'search_api.overview',
+      'dependencies' => 
+      array (
+        0 => 'system (>=8.3)',
+      ),
+      'version' => '8.x-1.5',
+      'core' => '8.x',
+      'project' => 'search_api',
+      'datestamp' => 1507989257,
+      'mtime' => 1507982058,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api/search_api.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'search_api_db' => 
+    array (
+      'type' => 'module',
+      'name' => 'Database Search',
+      'description' => 'Offers an implementation of the Search API that uses database tables for indexing content.',
+      'package' => 'Search',
+      'dependencies' => 
+      array (
+        0 => 'search_api:search_api',
+      ),
+      'version' => '8.x-1.5',
+      'core' => '8.x',
+      'project' => 'search_api',
+      'datestamp' => 1507989257,
+      'mtime' => 1507982058,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api/modules/search_api_db/search_api_db.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'search_api_db_defaults' => 
+    array (
+      'type' => 'module',
+      'name' => 'Database Search Defaults',
+      'description' => 'Enable this module for a best-practice default setup of Search API with the Database backend. After installation it is recommended to uninstall this module again for performance reasons. The provided configuration will not be removed.',
+      'package' => 'Search',
+      'dependencies' => 
+      array (
+        0 => 'drupal:comment',
+        1 => 'drupal:field',
+        2 => 'drupal:image',
+        3 => 'drupal:node',
+        4 => 'drupal:text',
+        5 => 'drupal:user',
+        6 => 'drupal:views',
+        7 => 'search_api:search_api_db',
+      ),
+      'version' => '8.x-1.5',
+      'core' => '8.x',
+      'project' => 'search_api',
+      'datestamp' => 1507989257,
+      'mtime' => 1507982058,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api/modules/search_api_db/search_api_db_defaults/search_api_db_defaults.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'search_api_solr' => 
+    array (
+      'type' => 'module',
+      'name' => 'Solr search',
+      'description' => 'Offers an implementation of the Search API that uses an Apache Solr server for indexing content.',
+      'package' => 'Search',
+      'dependencies' => 
+      array (
+        0 => 'search_api',
+      ),
+      'version' => '8.x-1.2',
+      'core' => '8.x',
+      'project' => 'search_api_solr',
+      'datestamp' => 1509541996,
+      'mtime' => 1509538396,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api_solr/search_api_solr.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'search_api_solr_defaults' => 
+    array (
+      'type' => 'module',
+      'name' => 'Solr Search Defaults',
+      'description' => 'Enable this module for a best-practice default setup of Search API with the Solr backend. After installation it is recommended to uninstall this module again for performance reasons. The provided configuration will not be removed.',
+      'package' => 'Search',
+      'dependencies' => 
+      array (
+        0 => 'drupal:comment',
+        1 => 'drupal:text',
+        2 => 'drupal:field',
+        3 => 'drupal:image',
+        4 => 'drupal:node',
+        5 => 'drupal:user',
+        6 => 'drupal:views',
+        7 => 'search_api_solr',
+      ),
+      'version' => '8.x-1.2',
+      'core' => '8.x',
+      'project' => 'search_api_solr',
+      'datestamp' => 1509541996,
+      'mtime' => 1509538396,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api_solr/search_api_solr_defaults/search_api_solr_defaults.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'search_api_views_taxonomy' => 
+    array (
+      'type' => 'module',
+      'name' => 'Search API Taxonomy Term Handlers',
+      'description' => 'Enables the use of Search API indexed taxonomy terms as filters or arguments in Search API supported Views.',
+      'package' => 'Search',
+      'configure' => 'search_api.overview',
+      'dependencies' => 
+      array (
+        0 => 'drupal:system (>=8.1)',
+        1 => 'search_api:search_api',
+        2 => 'drupal:taxonomy',
+        3 => 'drupal:views',
+      ),
+      'version' => '8.x-1.5',
+      'core' => '8.x',
+      'project' => 'search_api',
+      'datestamp' => 1507989257,
+      'mtime' => 1507982058,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/search_api/modules/search_api_views_taxonomy/search_api_views_taxonomy.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'serialization' => 
     array (
       'name' => 'Serialization',
@@ -1387,8 +2131,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/modules/simplenews/simplenews.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8000,
     ),
     'simplenews_demo' => 
     array (
@@ -1429,6 +2173,129 @@ $options['packages'] = array (
       ),
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/simpletest/simpletest.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms' => 
+    array (
+      'name' => 'SMS Framework',
+      'description' => 'Provides an extensible API that facilitates communication between Drupal and various SMS gateways.',
+      'package' => 'SMS Framework',
+      'type' => 'module',
+      'configure' => 'admin/config/smsframework',
+      'dependencies' => 
+      array (
+        0 => 'telephone',
+        1 => 'dynamic_entity_reference',
+      ),
+      'version' => '8.x-1.0',
+      'core' => '8.x',
+      'project' => 'smsframework',
+      'datestamp' => 1489138389,
+      'mtime' => 1489134790,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/smsframework/sms.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms_blast' => 
+    array (
+      'name' => 'SMS Blast',
+      'description' => 'Allows bulk text messages to be sent to registered users.',
+      'type' => 'module',
+      'package' => 'SMS Framework',
+      'dependencies' => 
+      array (
+        0 => 'sms',
+        1 => 'user',
+      ),
+      'version' => '8.x-1.0',
+      'core' => '8.x',
+      'project' => 'smsframework',
+      'datestamp' => 1489138389,
+      'mtime' => 1489134790,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/smsframework/modules/sms_blast/sms_blast.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms_clickatell' => 
+    array (
+      'name' => 'Clickatell',
+      'type' => 'module',
+      'description' => 'Enables modules to use Clickatell API, and integrates with SMS Framework.',
+      'version' => '8.x-1.0-beta3',
+      'core' => '8.x',
+      'project' => 'sms_clickatell',
+      'datestamp' => 1489148886,
+      'mtime' => 1489145286,
+      'dependencies' => 
+      array (
+      ),
+      'package' => 'Other',
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/sms_clickatell/sms_clickatell.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms_devel' => 
+    array (
+      'name' => 'SMS Devel',
+      'type' => 'module',
+      'description' => 'Tools to assist building with the SMS Framework.',
+      'package' => 'SMS Framework',
+      'dependencies' => 
+      array (
+        0 => 'sms',
+      ),
+      'version' => '8.x-1.0',
+      'core' => '8.x',
+      'project' => 'smsframework',
+      'datestamp' => 1489138389,
+      'mtime' => 1489134790,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/smsframework/modules/sms_devel/sms_devel.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms_sendtophone' => 
+    array (
+      'name' => 'Send to phone',
+      'type' => 'module',
+      'description' => 'Provides various tools for sending bits of information via SMS.',
+      'dependencies' => 
+      array (
+        0 => 'sms',
+      ),
+      'package' => 'SMS Framework',
+      'version' => '8.x-1.0',
+      'core' => '8.x',
+      'project' => 'smsframework',
+      'datestamp' => 1489138389,
+      'mtime' => 1489134790,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/smsframework/modules/sms_sendtophone/sms_sendtophone.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
+    'sms_user' => 
+    array (
+      'name' => 'SMS User',
+      'description' => 'Provides integration between the SMS Framework and Drupal users.',
+      'package' => 'SMS Framework',
+      'type' => 'module',
+      'dependencies' => 
+      array (
+        0 => 'sms',
+        1 => 'user',
+      ),
+      'version' => '8.x-1.0',
+      'core' => '8.x',
+      'project' => 'smsframework',
+      'datestamp' => 1489138389,
+      'mtime' => 1489134790,
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/smsframework/modules/sms_user/sms_user.info.yml',
       'status' => 0,
       'schema_version' => -1,
     ),
@@ -1494,6 +2361,25 @@ $options['packages'] = array (
       'status' => 1,
       'schema_version' => 8000,
     ),
+    'state_machine' => 
+    array (
+      'name' => 'State Machine',
+      'type' => 'module',
+      'description' => 'Provides code-driven workflow functionality.',
+      'package' => 'Other',
+      'version' => '8.x-1.0-beta3',
+      'core' => '8.x',
+      'project' => 'state_machine',
+      'datestamp' => 1477868941,
+      'mtime' => 1477865342,
+      'dependencies' => 
+      array (
+      ),
+      'php' => '5.5.9',
+      'filename' => '/var/aegir/projects/mp/dev/modules/contrib/state_machine/state_machine.info.yml',
+      'status' => 0,
+      'schema_version' => -1,
+    ),
     'statistics' => 
     array (
       'name' => 'Statistics',
@@ -1510,8 +2396,8 @@ $options['packages'] = array (
       'mtime' => 1509990124,
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/statistics/statistics.info.yml',
-      'status' => 0,
-      'schema_version' => -1,
+      'status' => 1,
+      'schema_version' => 8300,
     ),
     'syslog' => 
     array (
@@ -1548,7 +2434,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/system/system.info.yml',
       'status' => 1,
-      'schema_version' => '8403',
+      'schema_version' => 8403,
     ),
     'taxonomy' => 
     array (
@@ -1678,7 +2564,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/update/update.info.yml',
       'status' => 1,
-      'schema_version' => '8001',
+      'schema_version' => 8001,
     ),
     'user' => 
     array (
@@ -1698,7 +2584,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/user/user.info.yml',
       'status' => 1,
-      'schema_version' => '8100',
+      'schema_version' => 8100,
     ),
     'views' => 
     array (
@@ -1716,7 +2602,7 @@ $options['packages'] = array (
       'php' => '5.5.9',
       'filename' => '/var/aegir/projects/mp/dev/core/modules/views/views.info.yml',
       'status' => 1,
-      'schema_version' => '8201',
+      'schema_version' => 8201,
     ),
     'views_ui' => 
     array (
@@ -2712,7 +3598,7 @@ $options['packages'] = array (
         0 => 'classy',
       ),
       'filename' => '/var/aegir/projects/mp/dev/themes/marketplace/marketplace.info.yml',
-      'status' => 0,
+      'status' => 1,
     ),
   ),
 );

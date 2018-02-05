@@ -36,6 +36,10 @@ class ComposerStaticInitDrupal8
             'Zend\\Escaper\\' => 13,
             'Zend\\Diactoros\\' => 15,
         ),
+        'Y' => 
+        array (
+            'Youshido\\GraphQL\\' => 17,
+        ),
         'W' => 
         array (
             'Wikimedia\\Composer\\' => 19,
@@ -163,6 +167,10 @@ class ComposerStaticInitDrupal8
         'Zend\\Diactoros\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
+        ),
+        'Youshido\\GraphQL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/youshido/graphql/src',
         ),
         'Wikimedia\\Composer\\' => 
         array (

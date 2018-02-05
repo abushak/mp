@@ -1,0 +1,72 @@
+/*** custom styles ***/
+
+.form-type-number {
+	width:25%;
+	float:left;
+	
+	
+
+
+	label {display:none;} 
+	
+}
+.form-item,.form-actions {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;}
+	
+.form-actions {float: right; }
+#change_skin_menu_wrapper {
+	display:none;}
+	
+.views-field-field-commerce-ref {
+	 .field--name-title,.field--name-product-id,.field--type-commerce-price,.price,.currency, .field--name-field-ads, .field--name-field-brands, .field--name-field-category, .field--name-field-images, .field--name-field-old-price, .field--name-field-sale-from, .field--name-field-sale-to, .field--name-field-short-description, .field--name-field-slideshow, .field--name-stores, .field--name-field-specifications {display:none;}
+}
+
+.commerce-variation-add-to-cart-form {
+	.quantity  {
+		width:27%;
+		float:left;
+		padding: 5px 5px;
+		border: 1px solid #f2eeee;
+		max-width: 100%;
+		border-radius: 3px;
+		height: 38px;
+		
+	}
+	.form-submit {padding: 10px 14px;}
+	
+	
+	
+}
+
+.recently-view-items {
+
+.views-field-field-commerce-ref {
+	margin-top:30px;
+}
+}
+
+.products-recommend {
+
+.views-field-field-commerce-ref {
+	margin-top:30px;
+}
+}
+.view-frontpage  {
+
+.views-field-field-commerce-ref {
+	margin-top:30px;
+}
+}
+
+/* commerce cart button customization*/
+
+#block-cartbutton {
+	width:25%;
+	.content {margin-left:5%;}
+}
+
+.view-com-prod {
+	.form-type-commerce-price > div > label {display:none;}
+	#edit-unit-price-wrapper, .field--name-unit-price, .field--widget-commerce-price-default {display:none;}
+}

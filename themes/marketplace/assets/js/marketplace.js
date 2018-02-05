@@ -223,7 +223,7 @@
             self.attr('src', src);
         });
     }
-
+ 
     function setOwlCarousel() {
         $('.products-recommend .view-content').owlCarousel({
             items: 5,
@@ -234,8 +234,19 @@
             navigation: true,
             rtl: true,
         });
+		$('.recently-view-items .view-content').owlCarousel({
+            items: 5,
+            itemsDesktop: [1199, 4],
+            itemsDesktopSmall: [979, 3],
+            itemsTablet: [768, 2],
+            itemsMobile: [479, 1],
+            navigation: true,
+            rtl: true,
+        });
     }
 
+
+	
     function mobileMenu() {
         $('.navbar-toggle').mobileMenu({
           targetWrapper: '#block-mainnavigationm, .menu--main'
@@ -257,7 +268,7 @@
 
     function initProductQuantity() {
         var instock = 10;
-        var quantity = $(".commerce-add-to-cart.form-item-quantity");
+        var quantity = $(".ccommerce-order-item-variation-cart-form-form.field--name-quantity");
         if (quantity.children('.commerce-add-to-cart .increase').length == 0) {
             quantity.append($('<span class="btn increase" id="quantity-increase"></span>'));
         }
