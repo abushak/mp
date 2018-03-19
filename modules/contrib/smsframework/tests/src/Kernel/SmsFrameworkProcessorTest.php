@@ -12,6 +12,7 @@ use Drupal\sms\Message\SmsMessageResult;
  * Tests functionality provided by the SMS message event subscriber.
  *
  * @group SMS Framework
+ * @group legacy
  * @coversDefaultClass \Drupal\sms\EventSubscriber\SmsMessageProcessor
  */
 class SmsFrameworkProcessorTest extends SmsFrameworkKernelBase {
@@ -59,6 +60,8 @@ class SmsFrameworkProcessorTest extends SmsFrameworkKernelBase {
     parent::setUp();
 
     $this->installEntitySchema('sms');
+    $this->installEntitySchema('sms_result');
+    $this->installEntitySchema('sms_report');
 
     $this->gatewayMemory = $this->createMemoryGateway();
     $this->gatewayOutgoingResult = $this->createMemoryGateway(['plugin' => 'memory_outgoing_result']);

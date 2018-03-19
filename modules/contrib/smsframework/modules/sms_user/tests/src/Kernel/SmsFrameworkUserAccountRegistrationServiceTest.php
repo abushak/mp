@@ -18,6 +18,7 @@ use Drupal\sms\Direction;
  * Tests account registration.
  *
  * @group SMS Framework
+ * @group legacy
  * @coversDefaultClass \Drupal\sms_user\AccountRegistration
  */
 class SmsFrameworkUserAccountRegistrationServiceTest extends SmsFrameworkKernelBase {
@@ -91,6 +92,8 @@ class SmsFrameworkUserAccountRegistrationServiceTest extends SmsFrameworkKernelB
 
     $this->installEntitySchema('user');
     $this->installEntitySchema('sms');
+    $this->installEntitySchema('sms_result');
+    $this->installEntitySchema('sms_report');
     $this->installEntitySchema('sms_phone_number_verification');
 
     $this->phoneField = FieldStorageConfig::create([
@@ -545,7 +548,7 @@ class SmsFrameworkUserAccountRegistrationServiceTest extends SmsFrameworkKernelB
   /**
    * Count number of registered users.
    *
-   * @return \Drupal\user\UserInterface|NULL
+   * @return \Drupal\user\UserInterface|null
    *   Get last created user, or NULL if no users in database.
    */
   protected function getLastUser() {

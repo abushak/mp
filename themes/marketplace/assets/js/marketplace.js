@@ -268,7 +268,7 @@
 
     function initProductQuantity() {
         var instock = 10;
-        var quantity = $(".ccommerce-order-item-variation-cart-form-form.field--name-quantity");
+        var quantity = $(".commerce-order-item-variation-cart-form-form.field--name-quantity");
         if (quantity.children('.commerce-add-to-cart .increase').length == 0) {
             quantity.append($('<span class="btn increase" id="quantity-increase"></span>'));
         }

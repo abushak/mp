@@ -13,8 +13,9 @@ class ComposerStaticInitDrupal8
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '950e8c5ec01dc90f029c243f73011631' => __DIR__ . '/..' . '/goaop/parser-reflection/src/bootstrap.php',
-        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
+        'c594688b3441835d5575f3085da4a242' => __DIR__ . '/..' . '/webonyx/graphql-php/src/deprecated.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -35,10 +36,6 @@ class ComposerStaticInitDrupal8
             'Zend\\Feed\\' => 10,
             'Zend\\Escaper\\' => 13,
             'Zend\\Diactoros\\' => 15,
-        ),
-        'Y' => 
-        array (
-            'Youshido\\GraphQL\\' => 17,
         ),
         'W' => 
         array (
@@ -88,6 +85,7 @@ class ComposerStaticInitDrupal8
             'GuzzleHttp\\Psr7\\' => 16,
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
+            'GraphQL\\' => 8,
             'Goutte\\' => 7,
             'Go\\ParserReflection\\' => 20,
             'Go\\' => 3,
@@ -106,6 +104,7 @@ class ComposerStaticInitDrupal8
             'Doctrine\\Common\\Cache\\' => 22,
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
+            'DialogFlow\\' => 11,
         ),
         'C' => 
         array (
@@ -114,7 +113,6 @@ class ComposerStaticInitDrupal8
             'Commercie\\Currency\\' => 19,
             'Commercie\\CurrencyExchange\\' => 27,
             'CommerceGuys\\Intl\\' => 18,
-            'CommerceGuys\\Enum\\' => 18,
             'CommerceGuys\\Addressing\\' => 24,
             'Clickatell\\' => 11,
         ),
@@ -126,6 +124,7 @@ class ComposerStaticInitDrupal8
         'A' => 
         array (
             'Asm89\\Stack\\' => 12,
+            'ApiAi\\' => 6,
         ),
     );
 
@@ -167,10 +166,6 @@ class ComposerStaticInitDrupal8
         'Zend\\Diactoros\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
-        ),
-        'Youshido\\GraphQL\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/youshido/graphql/src',
         ),
         'Wikimedia\\Composer\\' => 
         array (
@@ -296,6 +291,10 @@ class ComposerStaticInitDrupal8
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
         ),
+        'GraphQL\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/webonyx/graphql-php/src',
+        ),
         'Goutte\\' => 
         array (
             0 => __DIR__ . '/..' . '/fabpot/goutte/Goutte',
@@ -356,6 +355,10 @@ class ComposerStaticInitDrupal8
         array (
             0 => __DIR__ . '/..' . '/doctrine/common/lib/Doctrine/Common',
         ),
+        'DialogFlow\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/iboldurev/dialogflow/src',
+        ),
         'Composer\\Semver\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/semver/src',
@@ -375,10 +378,6 @@ class ComposerStaticInitDrupal8
         'CommerceGuys\\Intl\\' => 
         array (
             0 => __DIR__ . '/..' . '/commerceguys/intl/src',
-        ),
-        'CommerceGuys\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/commerceguys/enum/src',
         ),
         'CommerceGuys\\Addressing\\' => 
         array (
@@ -401,6 +400,10 @@ class ComposerStaticInitDrupal8
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
+        ),
+        'ApiAi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/iboldurev/api-ai-php/src',
         ),
     );
 

@@ -15,11 +15,11 @@ interface PhoneNumberProviderInterface {
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
    *   An entity to get phone numbers.
-   * @param bool|NULL $verified
+   * @param bool|null $verified
    *   Whether the returned phone numbers must be verified, or NULL to get all
    *   phone numbers regardless of status.
    *
-   * @return string[int]
+   * @return string[]
    *   An array of phone numbers, keyed by original field item index.
    *
    * @throws \Drupal\sms\Exception\PhoneNumberSettingsException
@@ -35,7 +35,7 @@ interface PhoneNumberProviderInterface {
    * @param \Drupal\sms\Message\SmsMessageInterface $sms_message
    *   The SMS message to send to the entity.
    *
-   * @return \Drupal\sms\Message\SmsMessageResultInterface|FALSE
+   * @return \Drupal\sms\Message\SmsMessageResultInterface|false
    *   The message result from the gateway.
    *
    * @throws \Drupal\sms\Exception\NoPhoneNumberException

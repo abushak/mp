@@ -9,6 +9,7 @@ use Drupal\sms\Direction;
  * Tests behaviour of SMS Framework message queue.
  *
  * @group SMS Framework
+ * @group legacy
  */
 class SmsFrameworkQueueTest extends SmsFrameworkKernelBase {
 
@@ -54,6 +55,8 @@ class SmsFrameworkQueueTest extends SmsFrameworkKernelBase {
     parent::setUp();
 
     $this->installEntitySchema('sms');
+    $this->installEntitySchema('sms_result');
+    $this->installEntitySchema('sms_report');
 
     $this->gateway = $this->createMemoryGateway();
     $this->smsProvider = $this->container->get('sms.provider');

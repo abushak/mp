@@ -9,6 +9,7 @@ use Drupal\sms\Direction;
  * Tests SMS Framework gateway plugins.
  *
  * @group SMS Framework
+ * @group legacy
  */
 class SmsFrameworkGatewayPluginTest extends SmsFrameworkKernelBase {
 
@@ -26,6 +27,8 @@ class SmsFrameworkGatewayPluginTest extends SmsFrameworkKernelBase {
   protected function setUp() {
     parent::setUp();
     $this->installEntitySchema('sms');
+    $this->installEntitySchema('sms_result');
+    $this->installEntitySchema('sms_report');
     $this->smsProvider = $this->container->get('sms.provider');
   }
 
