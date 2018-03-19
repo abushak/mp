@@ -2717,6 +2717,30 @@ $connection->insert('content_node_field')
   'locked' => '0',
 ))
 ->values(array(
+  'field_name' => 'field_company_2',
+  'type' => 'nodereference',
+  'global_settings' => 'a:1:{s:19:"referenceable_types";a:10:{s:7:"company";s:7:"company";s:7:"article";i:0;s:8:"employee";i:0;s:5:"forum";i:0;s:10:"test_event";i:0;s:9:"test_page";i:0;s:11:"test_planet";i:0;s:10:"test_story";i:0;s:7:"sponsor";i:0;s:5:"story";i:0;}}',
+  'required' => '0',
+  'multiple' => '0',
+  'db_storage' => '1',
+  'module' => 'nodereference',
+  'db_columns' => 'a:1:{s:3:"nid";a:4:{s:4:"type";s:3:"int";s:8:"unsigned";b:1;s:8:"not null";b:0;s:5:"index";b:1;}}',
+  'active' => '1',
+  'locked' => '0',
+))
+->values(array(
+  'field_name' => 'field_company_3',
+  'type' => 'nodereference',
+  'global_settings' => 'a:1:{s:19:"referenceable_types";a:10:{s:7:"company";s:7:"company";s:7:"article";i:0;s:8:"employee";i:0;s:5:"forum";i:0;s:10:"test_event";i:0;s:9:"test_page";i:0;s:11:"test_planet";i:0;s:10:"test_story";i:0;s:7:"sponsor";i:0;s:5:"story";i:0;}}',
+  'required' => '0',
+  'multiple' => '0',
+  'db_storage' => '1',
+  'module' => 'nodereference',
+  'db_columns' => 'a:1:{s:3:"nid";a:4:{s:4:"type";s:3:"int";s:8:"unsigned";b:1;s:8:"not null";b:0;s:5:"index";b:1;}}',
+  'active' => '1',
+  'locked' => '0',
+))
+->values(array(
   'field_name' => 'field_multivalue',
   'type' => 'number_decimal',
   'global_settings' => 'a:9:{s:6:"prefix";s:0:"";s:6:"suffix";s:0:"";s:3:"min";s:0:"";s:3:"max";s:0:"";s:14:"allowed_values";s:0:"";s:18:"allowed_values_php";s:0:"";s:9:"precision";s:2:"10";s:5:"scale";s:1:"2";s:7:"decimal";s:1:".";}',
@@ -3075,6 +3099,30 @@ $connection->insert('content_node_field_instance')
   'widget_active' => '1',
 ))
 ->values(array(
+  'field_name' => 'field_company_2',
+  'type_name' => 'employee',
+  'weight' => '33',
+  'label' => 'Company 2',
+  'widget_type' => 'nodereference_buttons',
+  'widget_settings' => 'a:4:{s:18:"autocomplete_match";s:8:"contains";s:4:"size";i:60;s:13:"default_value";a:1:{i:0;a:1:{s:3:"nid";s:0:"";}}s:17:"default_value_php";N;}',
+  'display_settings' => 'a:5:{s:5:"label";a:2:{s:6:"format";s:5:"above";s:7:"exclude";i:0;}i:5;a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}s:6:"teaser";a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}s:4:"full";a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}i:4;a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}}',
+  'description' => '',
+  'widget_module' => 'nodereference',
+  'widget_active' => '1',
+))
+->values(array(
+  'field_name' => 'field_company_3',
+  'type_name' => 'employee',
+  'weight' => '34',
+  'label' => 'Company 3',
+  'widget_type' => 'nodereference_autocomplete',
+  'widget_settings' => 'a:4:{s:18:"autocomplete_match";s:8:"contains";s:4:"size";s:2:"60";s:13:"default_value";a:1:{i:0;a:2:{s:3:"nid";N;s:14:"_error_element";s:50:"default_value_widget][field_company_3][0][nid][nid";}}s:17:"default_value_php";N;}',
+  'display_settings' => 'a:5:{s:5:"label";a:2:{s:6:"format";s:5:"above";s:7:"exclude";i:0;}i:5;a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}s:6:"teaser";a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}s:4:"full";a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}i:4;a:2:{s:6:"format";s:7:"default";s:7:"exclude";i:0;}}',
+  'description' => '',
+  'widget_module' => 'nodereference',
+  'widget_active' => '1',
+))
+->values(array(
   'field_name' => 'field_multivalue',
   'type_name' => 'test_planet',
   'weight' => '2',
@@ -3374,6 +3422,18 @@ $connection->schema()->createTable('content_type_employee', array(
       'size' => 'normal',
       'unsigned' => TRUE,
     ),
+    'field_company_2_nid' => array(
+      'type' => 'int',
+      'not null' => FALSE,
+      'size' => 'normal',
+      'unsigned' => TRUE,
+    ),
+    'field_company_3_nid' => array(
+      'type' => 'int',
+      'not null' => FALSE,
+      'size' => 'normal',
+      'unsigned' => TRUE,
+    ),
   ),
   'primary key' => array(
     'vid',
@@ -3385,6 +3445,12 @@ $connection->schema()->createTable('content_type_employee', array(
     'field_commander_uid' => array(
       'field_commander_uid',
     ),
+    'field_company_2_nid' => array(
+      'field_company_2_nid',
+    ),
+    'field_company_3_nid' => array(
+      'field_company_3_nid',
+    ),
   ),
   'mysql_character_set' => 'utf8',
 ));
@@ -3394,11 +3460,15 @@ $connection->insert('content_type_employee')
   'vid',
   'nid',
   'field_commander_uid',
+  'field_company_2_nid',
+  'field_company_3_nid',
 ))
 ->values(array(
   'vid' => '21',
   'nid' => '18',
   'field_commander_uid' => '8',
+  'field_company_2_nid' => '15',
+  'field_company_3_nid' => '16',
 ))
 ->execute();
 
@@ -3780,9 +3850,9 @@ $connection->insert('content_type_story')
   'field_test_phone_value' => NULL,
   'field_test_exclude_unset_value' => 'text for default value',
   'field_test_exclude_unset_format' => '1',
-  'field_test_imagefield_fid' => NULL,
-  'field_test_imagefield_list' => NULL,
-  'field_test_imagefield_data' => NULL,
+  'field_test_imagefield_fid' => '2',
+  'field_test_imagefield_list' => '1',
+  'field_test_imagefield_data' => 'a:2:{s:3:"alt";s:8:"Test alt";s:5:"title";s:10:"Test title";}',
   'field_test_text_single_checkbox2_value' => 'Off',
   'field_test_datestamp_value2' => '1391357160',
   'field_test_datetime_value2' => '2015-03-04 06:07:00',
@@ -43535,6 +43605,36 @@ $connection->insert('node_counter')
   'timestamp',
 ))
 ->values(array(
+  'nid' => '1',
+  'totalcount' => '2',
+  'daycount' => '0',
+  'timestamp' => '1421727536',
+))
+->values(array(
+  'nid' => '2',
+  'totalcount' => '1',
+  'daycount' => '0',
+  'timestamp' => '1471428059',
+))
+->values(array(
+  'nid' => '3',
+  'totalcount' => '1',
+  'daycount' => '0',
+  'timestamp' => '1471428153',
+))
+->values(array(
+  'nid' => '4',
+  'totalcount' => '1',
+  'daycount' => '1',
+  'timestamp' => '1478755275',
+))
+->values(array(
+  'nid' => '5',
+  'totalcount' => '1',
+  'daycount' => '1',
+  'timestamp' => '1478755314',
+))
+->values(array(
   'nid' => '14',
   'totalcount' => '1',
   'daycount' => '1',
@@ -46469,6 +46569,14 @@ $connection->insert('upload')
   'list' => '0',
   'weight' => '1',
 ))
+->values(array(
+  'fid' => '3',
+  'nid' => '12',
+  'vid' => '15',
+  'description' => 'file 12-15-3',
+  'list' => '0',
+  'weight' => '0',
+))
 ->execute();
 
 $connection->schema()->createTable('url_alias', array(
@@ -46552,6 +46660,12 @@ $connection->insert('url_alias')
   'src' => 'node/13',
   'dst' => 'the-zulu-people',
   'language' => 'en',
+))
+->values(array(
+  'pid' => '8',
+  'src' => 'admin',
+  'dst' => 'source-noslash',
+  'language' => '',
 ))
 ->execute();
 

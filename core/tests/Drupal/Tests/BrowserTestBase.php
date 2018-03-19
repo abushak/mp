@@ -321,18 +321,27 @@ abstract class BrowserTestBase extends TestCase {
     $this->mink->setDefaultSessionName('default');
     $this->registerSessions();
 
-    // According to the W3C WebDriver specification a cookie can only be set if
-    // the cookie domain is equal to the domain of the active document. When the
-    // browser starts up the active document is not our domain but 'about:blank'
-    // or similar. To be able to set our User-Agent and Xdebug cookies at the
-    // start of the test we now do a request to the front page so the active
-    // document matches the domain.
-    // @see https://w3c.github.io/webdriver/webdriver-spec.html#add-cookie
-    // @see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20975
-    $session = $this->getSession();
-    $session->visit($this->baseUrl);
+    $this->initFrontPage();
 
     return $session;
+  }
+
+  /**
+   * Visits the front page when initializing Mink.
+   *
+   * According to the W3C WebDriver specification a cookie can only be set if
+   * the cookie domain is equal to the domain of the active document. When the
+   * browser starts up the active document is not our domain but 'about:blank'
+   * or similar. To be able to set our User-Agent and Xdebug cookies at the
+   * start of the test we now do a request to the front page so the active
+   * document matches the domain.
+   *
+   * @see https://w3c.github.io/webdriver/webdriver-spec.html#add-cookie
+   * @see https://www.w3.org/Bugs/Public/show_bug.cgi?id=20975
+   */
+  protected function initFrontPage() {
+    $session = $this->getSession();
+    $session->visit($this->baseUrl);
   }
 
   /**
@@ -345,12 +354,12 @@ abstract class BrowserTestBase extends TestCase {
    *   When provided default Mink driver class can't be instantiated.
    */
   protected function getDefaultDriverInstance() {
-    // Get default driver params from environment if availables.
-    if ($arg_json = getenv('MINK_DRIVER_ARGS')) {
+    // Get default driver params from environment if available.
+    if ($arg_json = $this->getMinkDriverArgs()) {
       $this->minkDefaultDriverArgs = json_decode($arg_json, TRUE);
     }
 
-    // Get and check default driver class from environment if availables.
+    // Get and check default driver class from environment if available.
     if ($minkDriverClass = getenv('MINK_DRIVER_CLASS')) {
       if (class_exists($minkDriverClass)) {
         $this->minkDefaultDriverClass = $minkDriverClass;
@@ -393,6 +402,18 @@ abstract class BrowserTestBase extends TestCase {
         $this->htmlOutputCounter = max(1, (int) file_get_contents($this->htmlOutputCounterStorage)) + 1;
       }
     }
+  }
+
+  /**
+   * Get the Mink driver args from an environment variable, if it is set. Can
+   * be overridden in a derived class so it is possible to use a different
+   * value for a subset of tests, e.g. the JavaScript tests.
+   *
+   *  @return string|false
+   *   The JSON-encoded argument string. False if it is not set.
+   */
+  protected function getMinkDriverArgs() {
+    return getenv('MINK_DRIVER_ARGS');
   }
 
   /**
@@ -485,6 +506,11 @@ abstract class BrowserTestBase extends TestCase {
     if ($disable_gc) {
       gc_enable();
     }
+
+    // Ensure that the test is not marked as risky because of no assertions. In
+    // PHPUnit 6 tests that only make assertions using $this->assertSession()
+    // can be marked as risky.
+    $this->addToAssertionCount(1);
   }
 
   /**
@@ -576,6 +602,7 @@ abstract class BrowserTestBase extends TestCase {
    *   A new web-assert option for asserting the presence of elements with.
    */
   public function assertSession($name = NULL) {
+    $this->addToAssertionCount(1);
     return new WebAssert($this->getSession($name), $this->baseUrl);
   }
 
@@ -1150,6 +1177,7 @@ abstract class BrowserTestBase extends TestCase {
   protected function clickLink($label, $index = 0) {
     $label = (string) $label;
     $links = $this->getSession()->getPage()->findAll('named', ['link', $label]);
+    $this->assertArrayHasKey($index, $links, 'The link ' . $label . ' was not found on the page.');
     $links[$index]->click();
   }
 
@@ -1288,6 +1316,28 @@ abstract class BrowserTestBase extends TestCase {
     }
 
     return $caller;
+  }
+
+  /**
+   * Transforms a nested array into a flat array suitable for drupalPostForm().
+   *
+   * @param array $values
+   *   A multi-dimensional form values array to convert.
+   *
+   * @return array
+   *   The flattened $edit array suitable for BrowserTestBase::drupalPostForm().
+   */
+  protected function translatePostValues(array $values) {
+    $edit = [];
+    // The easiest and most straightforward way to translate values suitable for
+    // BrowserTestBase::drupalPostForm() is to actually build the POST data
+    // string and convert the resulting key/value pairs back into a flat array.
+    $query = http_build_query($values);
+    foreach (explode('&', $query) as $item) {
+      list($key, $value) = explode('=', $item);
+      $edit[urldecode($key)] = urldecode($value);
+    }
+    return $edit;
   }
 
   /**

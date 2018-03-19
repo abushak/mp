@@ -13,8 +13,8 @@ class ComposerStaticInitDrupal8
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         '950e8c5ec01dc90f029c243f73011631' => __DIR__ . '/..' . '/goaop/parser-reflection/src/bootstrap.php',
-        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
+        'def43f6c87e4f8dfd0c9e1b1bab14fe8' => __DIR__ . '/..' . '/symfony/polyfill-iconv/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -114,7 +114,6 @@ class ComposerStaticInitDrupal8
             'Commercie\\Currency\\' => 19,
             'Commercie\\CurrencyExchange\\' => 27,
             'CommerceGuys\\Intl\\' => 18,
-            'CommerceGuys\\Enum\\' => 18,
             'CommerceGuys\\Addressing\\' => 24,
             'Clickatell\\' => 11,
         ),
@@ -126,6 +125,7 @@ class ComposerStaticInitDrupal8
         'A' => 
         array (
             'Asm89\\Stack\\' => 12,
+            'ApiAi\\' => 6,
         ),
     );
 
@@ -376,10 +376,6 @@ class ComposerStaticInitDrupal8
         array (
             0 => __DIR__ . '/..' . '/commerceguys/intl/src',
         ),
-        'CommerceGuys\\Enum\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/commerceguys/enum/src',
-        ),
         'CommerceGuys\\Addressing\\' => 
         array (
             0 => __DIR__ . '/..' . '/commerceguys/addressing/src',
@@ -401,6 +397,10 @@ class ComposerStaticInitDrupal8
         'Asm89\\Stack\\' => 
         array (
             0 => __DIR__ . '/..' . '/asm89/stack-cors/src/Asm89/Stack',
+        ),
+        'ApiAi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/iboldurev/api-ai-php/src',
         ),
     );
 

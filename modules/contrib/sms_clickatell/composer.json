@@ -1,8 +1,8 @@
 {
-  "name": "drupal/clickatell",
+  "name": "drupal/sms_clickatell",
   "description": "Enables modules to use Clickatell API.",
   "type": "drupal-module",
-  "homepage": "http://drupal.org/project/clickatell",
+  "homepage": "http://drupal.org/project/sms_clickatell",
   "authors": [
     {
       "name": "Daniel Phin",
@@ -11,9 +11,12 @@
       "role": "Maintainer"
     }
   ],
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "minimum-stability": "dev",
   "require": {
     "arcturial/clickatell": "^2.1"
+  },
+  "suggest": {
+    "drupal/sms": "^1.0"
   }
 }

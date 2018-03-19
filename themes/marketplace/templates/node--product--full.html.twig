@@ -98,15 +98,17 @@
           <span>{{ node_title }}</span>
         </h1>
         <div class="field-product-brand">
-          {% trans %}<span>by </span>{% endtrans %}
+          {% trans %}<span> </span>{% endtrans %}
           {{ content.field_brands }}
         </div>
-        {{ content.field_old_price }}
-        {{ content.field_discount_percentage }}
-        {{ content.field_price }}
-        {{ content.field_commerce_ref }}
+
         <div class="field field-type-commerce-product-reference">
-          <form action="" class="commerce-add-to-cart">
+            {{ content.field_old_price }}
+        	{{ content.field_discount_percentage }}
+
+        	{{ content.field_commerce_ref }}
+
+          <!--form action="" class="commerce-add-to-cart">
             <div class="form-item form-type-textfield form-item-quantity add-quantity-button">
               <span class="btn decrease" id="quantity-decrease"></span>
               <label for="edit-quantity">Quantity </label>
@@ -114,7 +116,7 @@
               <span class="btn increase" id="quantity-increase"></span>
             </div>
             <input id="add-to-cart" name="op" value="Add to cart" class="form-submit" type="submit">
-          </form>
+          </form> !-->
         </div>
         {{ content.field_stores }}
         {{ content.field_short_description }}

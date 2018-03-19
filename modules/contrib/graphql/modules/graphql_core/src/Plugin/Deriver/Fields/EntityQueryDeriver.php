@@ -12,9 +12,6 @@ use Drupal\Core\TypedData\TypedDataManager;
 use Drupal\graphql\Utility\StringHelper;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * Create GraphQL entityQuery fields based on available Drupal entity types.
- */
 class EntityQueryDeriver extends DeriverBase implements ContainerDeriverInterface {
   use StringTranslationTrait;
 
@@ -64,22 +61,6 @@ class EntityQueryDeriver extends DeriverBase implements ContainerDeriverInterfac
           'description' => $this->t("Loads '@type' entities.", ['@type' => $type->getLabel()]),
           'entity_type' => $id,
         ] + $basePluginDefinition;
-
-        /** @var \Drupal\Core\Entity\TypedData\EntityDataDefinitionInterface $definition */
-        $definition = $this->typedDataManager->createDataDefinition("entity:$id");
-        $properties = $definition->getPropertyDefinitions();
-
-        $queryableProperties = array_filter($properties, function ($property) {
-          return $property instanceof BaseFieldDefinition && $property->isQueryable();
-        });
-
-        if (!empty($queryableProperties)) {
-          $derivative['arguments']['filter'] = [
-            'multi' => FALSE,
-            'nullable' => TRUE,
-            'type' => StringHelper::camelCase($id, 'query', 'filter', 'input'),
-          ];
-        }
 
         $this->derivatives[$id] = $derivative;
       }

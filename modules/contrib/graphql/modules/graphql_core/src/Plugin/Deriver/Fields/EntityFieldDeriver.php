@@ -5,25 +5,18 @@ namespace Drupal\graphql_core\Plugin\Deriver\Fields;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\field\FieldStorageConfigInterface;
 use Drupal\graphql\Utility\StringHelper;
-use Drupal\graphql_core\Plugin\Deriver\EntityFieldDeriverWithTypeMapping;
-use Drupal\graphql_core\Plugin\GraphQL\Fields\Entity\EntityField;
-use Drupal\graphql_core\Plugin\GraphQL\Types\Entity\EntityFieldType;
+use Drupal\graphql_core\Plugin\Deriver\EntityFieldDeriverBase;
 
-// TODO Write tests for entity reference graph traversal.
-
-// TODO Should we expose config entities?
-
-// TODO Convert timestamps to strings?
-
-/**
- * Deriver for RawValue fields.
- */
-class EntityFieldDeriver extends EntityFieldDeriverWithTypeMapping {
+class EntityFieldDeriver extends EntityFieldDeriverBase {
 
   /**
    * {@inheritdoc}
    */
   protected function getDerivativeDefinitionsFromFieldDefinition($entityTypeId, FieldStorageDefinitionInterface $fieldDefinition, array $basePluginDefinition) {
+    if (!$propertyDefinitions = $fieldDefinition->getPropertyDefinitions()) {
+      return [];
+    }
+
     $fieldName = $fieldDefinition->getName();
     if (!$parents = $this->getParentsForField($entityTypeId, $fieldDefinition)) {
       return [];
@@ -31,38 +24,40 @@ class EntityFieldDeriver extends EntityFieldDeriverWithTypeMapping {
 
     $derivative = [
       'parents' => $parents,
-      'name' => EntityField::getId($fieldName),
+      'name' => StringHelper::propCase($fieldName),
       'description' => $fieldDefinition->getDescription(),
-      'multi' => $fieldDefinition->isMultiple(),
       'field' => $fieldName,
       'schema_cache_tags' => array_merge($fieldDefinition->getCacheTags(), ['entity_field_info']),
       'schema_cache_contexts' => $fieldDefinition->getCacheContexts(),
       'schema_cache_max_age' => $fieldDefinition->getCacheMaxAge(),
-    ];
+    ] + $basePluginDefinition;
 
-    $properties = $fieldDefinition->getPropertyDefinitions();
-    if (count($properties) === 1) {
+    if (count($propertyDefinitions) === 1) {
       // Flatten the structure for single-property fields.
-      /** @var \Drupal\Core\TypedData\DataDefinitionInterface $property */
-      $property = reset($properties);
-      $keys = array_keys($properties);
-
-      $derivative['type'] = $this->typeMapper->typedDataToGraphQLFieldType($property);
-      $derivative['property'] = reset($keys);
+      $derivative['type'] = reset($propertyDefinitions)->getDataType();
+      $derivative['property'] = key($propertyDefinitions);
     }
     else {
-      $derivative['type'] = EntityFieldType::getId($entityTypeId, $fieldName);
+      $derivative['type'] = StringHelper::camelCase('field', $entityTypeId, $fieldName);
     }
 
-    return [
-      "$entityTypeId-$fieldName" => $derivative + $basePluginDefinition,
-    ];
+    if ($fieldDefinition->isMultiple()) {
+      $derivative['type'] = StringHelper::listType($derivative['type']);
+    }
+
+    return ["$entityTypeId-$fieldName" => $derivative];
   }
 
   /**
-   * @param $entityTypeId
+   * Determines the parent types for a field.
+   *
+   * @param string $entityTypeId
+   *   The entity type id of the field.
    * @param \Drupal\Core\Field\FieldStorageDefinitionInterface $fieldDefinition
+   *   The field storage definition.
+   *
    * @return array
+   *   The pareants of the field.
    */
   protected function getParentsForField($entityTypeId, FieldStorageDefinitionInterface $fieldDefinition) {
     if ($fieldDefinition->isBaseField()) {

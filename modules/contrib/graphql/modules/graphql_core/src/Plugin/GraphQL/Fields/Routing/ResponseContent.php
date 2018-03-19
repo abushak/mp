@@ -2,8 +2,6 @@
 
 namespace Drupal\graphql_core\Plugin\GraphQL\Fields\Routing;
 
-
-use Drupal\graphql\Annotation\GraphQLField;
 use Drupal\graphql\Plugin\GraphQL\Fields\FieldPluginBase;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,8 +27,7 @@ class ResponseContent extends FieldPluginBase {
     if ($value instanceof Response) {
       yield $value->getContent();
     }
-
-    if ($value instanceof ResponseInterface) {
+    else if ($value instanceof ResponseInterface) {
       yield (string) $value->getBody();
     }
   }

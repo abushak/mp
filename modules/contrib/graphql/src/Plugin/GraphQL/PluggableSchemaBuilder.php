@@ -2,7 +2,6 @@
 
 namespace Drupal\graphql\Plugin\GraphQL;
 
-use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Core\DependencyInjection\DependencySerializationTrait;
 
 class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
@@ -25,7 +24,7 @@ class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
   protected $instances = [];
 
   /**
-   * PluggableSchemaBuilderInterface constructor.
+   * PluggableSchemaBuilder constructor.
    *
    * @param \Drupal\graphql\Plugin\GraphQL\TypeSystemPluginManagerAggregator $pluginManagers
    *   Type system plugin manager aggregator service.
@@ -38,59 +37,55 @@ class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
    * {@inheritdoc}
    */
   public function getInstance($pluginType, $pluginId, array $pluginConfiguration = []) {
-    asort($pluginConfiguration);
-    $configCid = md5(json_encode($pluginConfiguration));
-
-    if (!isset($this->instances[$pluginType][$pluginId][$configCid])) {
-      $manager = $this->pluginManagers->getPluginManager($pluginType);
-      if (empty($manager)) {
+    $cid = $this->getCacheIdentifier($pluginType, $pluginId, $pluginConfiguration);
+    if (!isset($this->instances[$cid])) {
+      $managers = $this->pluginManagers->getPluginManagers($pluginType);
+      if (empty($managers)) {
         throw new \LogicException(sprintf('Could not find %s plugin manager for plugin %s.', $pluginType, $pluginId));
       }
 
       // We do not allow plugin configuration for now.
-      $instance = $manager->createInstance($pluginId, $pluginConfiguration);
+      $instance = NULL;
+      foreach ($managers as $manager) {
+        if($manager->hasDefinition($pluginId)) {
+          $instance = $manager->createInstance($pluginId, $pluginConfiguration);
+        }
+      }
+
       if (empty($instance)) {
-        throw new \LogicException(sprintf('Could not instantiate plugin %s of type %s.', $pluginId, $pluginType));
+        throw new \LogicException(sprintf('Failed to instantiate plugin %s of type %s.', $pluginId, $pluginType));
       }
 
-      if (!$instance instanceof TypeSystemPluginInterface) {
-        throw new \LogicException(sprintf('Plugin %s of type %s does not implement \Drupal\graphql\Plugin\GraphQL\TypeSystemPluginInterface.', $pluginId, $pluginType));
-      }
-
-      // Initialize the static cache array if necessary.
-      $this->instances[$pluginType] = isset($this->instances[$pluginType]) ? $this->instances[$pluginType] : [];
-      $this->instances[$pluginType][$pluginId] = isset($this->instances[$pluginType][$pluginId]) ? $this->instances[$pluginType][$pluginId] : [];
-      $this->instances[$pluginType][$pluginId][$configCid] = $instance;
+      $this->instances[$cid] = $instance;
     }
 
-    return $this->instances[$pluginType][$pluginId][$configCid];
+    return $this->instances[$cid];
   }
 
   /**
    * {@inheritdoc}
    */
-  public function find(callable $selector, array $types, $invert = FALSE) {
+  public function find(callable $selector, array $types) {
     $items = [];
 
     /** @var \Drupal\graphql\Plugin\GraphQL\TypeSystemPluginManagerInterface $manager */
-    foreach ($this->pluginManagers as $type => $manager) {
+    foreach ($this->pluginManagers as $type => $managers) {
       if (!in_array($type, $types)) {
         continue;
       }
 
-      foreach ($manager->getDefinitions() as $id => $definition) {
-        $name = $definition['name'];
-        if (empty($name)) {
-          throw new InvalidPluginDefinitionException('Invalid GraphQL plugin definition. No name defined.');
-        }
+      foreach ($managers as $manager) {
+        foreach ($manager->getDefinitions() as $id => $definition) {
+          $name = $definition['name'];
 
-        if (!array_key_exists($name, $items) || $items[$name]['weight'] < $definition['weight']) {
-          if ((($invert && !$selector($definition)) || $selector($definition))) {
-            $items[$name] = [
-              'weight' => $definition['weight'],
-              'id' => $id,
-              'type' => $type,
-            ];
+          if (!array_key_exists($name, $items) || $items[$name]['weight'] < $definition['weight']) {
+            if ($selector($definition)) {
+              $items[$name] = [
+                'weight' => $definition['weight'],
+                'id' => $id,
+                'type' => $type,
+              ];
+            }
           }
         }
       }
@@ -113,14 +108,31 @@ class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
   /**
    * {@inheritdoc}
    */
+  public function findByDataType($type, array $types) {
+    $parts = explode(':', $type);
+    $chain = array_reverse(array_reduce($parts, function ($carry, $current) {
+      return array_merge($carry, [implode(':', array_filter([end($carry), $current]))]);
+    }, []), TRUE);
+
+    $result = $this->find(function($definition) use ($chain) {
+      if (!empty($definition['type'])) {
+        foreach ($chain as $priority => $part) {
+          if ($definition['type'] === $part) {
+            return TRUE;
+          }
+        }
+      }
+
+      return FALSE;
+    }, $types);
+
+    return array_pop($result);
+  }
+
   public function findByName($name, array $types) {
     $result = $this->find(function($definition) use ($name) {
       return $definition['name'] === $name;
     }, $types);
-
-    if (empty($result)) {
-      throw new InvalidPluginDefinitionException(sprintf('GraphQL plugin with name %s could not be found.', $name));
-    }
 
     return array_pop($result);
   }
@@ -128,29 +140,59 @@ class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
   /**
    * {@inheritdoc}
    */
-  public function findByDataType($dataType, array $types = [
-    GRAPHQL_UNION_TYPE_PLUGIN,
-    GRAPHQL_TYPE_PLUGIN,
-    GRAPHQL_INTERFACE_PLUGIN,
-    GRAPHQL_SCALAR_PLUGIN,
-  ]) {
-    $chain = explode(':', $dataType);
-
-    while ($chain) {
-      $dataType = implode(':', $chain);
-
-      $types = $this->find(function($definition) use ($dataType) {
-        return isset($definition['data_type']) && $definition['data_type'] == $dataType;
-      }, $types);
-
-      if (!empty($types)) {
-        return array_pop($types);
-      }
-
-      array_pop($chain);
+  public function findByDataTypeOrName($input, array $types) {
+    if ($type = $this->findByDataType($input, $types)) {
+      return $type;
     }
 
-    return NULL;
+    if ($type = $this->findByName($input, $types)) {
+      return $type;
+    }
+
+    return $this->getInstance('scalar', 'undefined');
+  }
+
+  /**
+   * Creates a plugin instance cache identifier.
+   *
+   * @param string $pluginType
+   *   The plugin type.
+   * @param string $pluginId
+   *   The plugin id.
+   * @param array $pluginConfiguration
+   *   The plugin configuration.
+   *
+   * @return string
+   */
+  protected function getCacheIdentifier($pluginType, $pluginId, array $pluginConfiguration) {
+    if (empty($pluginConfiguration)) {
+      return "$pluginType:::$pluginId";
+    }
+
+    $configCid = md5(serialize($this->sortRecursive($pluginConfiguration)));
+    return "$pluginType:::$pluginId:::$configCid";
+  }
+
+  /**
+   * Recursively sorts an array.
+   *
+   * Useful for generating a cache identifiers.
+   *
+   * @param array $subject
+   *   The array to sort.
+   *
+   * @return array
+   *   The sorted array.
+   */
+  protected function sortRecursive(array $subject) {
+    asort($subject);
+    foreach ($subject as $key => $item) {
+      if (is_array($item)) {
+        $subject[$key] = $this->sortRecursive($item);
+      }
+    }
+
+    return $subject;
   }
 
   /**
@@ -160,4 +202,5 @@ class PluggableSchemaBuilder implements PluggableSchemaBuilderInterface {
     // Don't write the plugin instances into the cache.
     return array_diff($this->sleepDependencies(), ['instances']);
   }
+
 }

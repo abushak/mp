@@ -2581,7 +2581,7 @@ body:not(.user-logged-in) .block-simplenews .form-submit {
   margin-bottom: 10px;
 }
 /* line 258, ../sass/partials/_page.scss */
-.product-summary-info .field--name-field-price {
+.product-summary-info .field--name-field-price, .product-summary-info .field--type-commerce-price {
   color: #ff6d00;
   font-size: 1.714em;
   margin-bottom: 15px;

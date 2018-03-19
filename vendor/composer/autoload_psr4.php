@@ -67,10 +67,10 @@ return array(
     'Commercie\\Currency\\' => array($vendorDir . '/commercie/currency/src'),
     'Commercie\\CurrencyExchange\\' => array($vendorDir . '/commercie/currency-exchange/src'),
     'CommerceGuys\\Intl\\' => array($vendorDir . '/commerceguys/intl/src'),
-    'CommerceGuys\\Enum\\' => array($vendorDir . '/commerceguys/enum/src'),
     'CommerceGuys\\Addressing\\' => array($vendorDir . '/commerceguys/addressing/src'),
     'Clickatell\\' => array($vendorDir . '/arcturial/clickatell/src', $vendorDir . '/arcturial/clickatell/test'),
     'Behat\\Mink\\Driver\\' => array($vendorDir . '/behat/mink-browserkit-driver/src', $vendorDir . '/behat/mink-goutte-driver/src'),
     'Behat\\Mink\\' => array($vendorDir . '/behat/mink/src'),
     'Asm89\\Stack\\' => array($vendorDir . '/asm89/stack-cors/src/Asm89/Stack'),
+    'ApiAi\\' => array($vendorDir . '/iboldurev/api-ai-php/src'),
 );
